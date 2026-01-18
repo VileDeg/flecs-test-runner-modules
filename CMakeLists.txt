@@ -1,27 +1,14 @@
-set(LIB_NAME ${MODULES_LIB_NAME})
-set(SRC_DIR "./")
-#set(SHARED_DIR "../shared/")
+cmake_minimum_required(VERSION 3.14)
 
-#include(../Functions.cmake) # TODO: is enough to include at the top level?
-discover_sources(${SRC_DIR} SRC_FILES)
+set(PROJECT_NAME "Modules")
 
-# Create a static library
-add_library(
-  ${LIB_NAME} STATIC 
-  ${SRC_FILES}
-)
+# Set the project name and version
+project(${PROJECT_NAME} VERSION 1.0)
 
-# Add src directory to include path so headers can be found
-target_include_directories(
-  ${LIB_NAME} 
-  PRIVATE 
-    ${SRC_DIR}
-    ${SRC_DIR}/include
-    #${SHARED_DIR}
-)
+# Specify the C++ standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-target_link_libraries(
-  ${LIB_NAME}
-  PRIVATE
-    flecs::flecs_static
-)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+add_subdirectory(src) 
