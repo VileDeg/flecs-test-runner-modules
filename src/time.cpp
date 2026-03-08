@@ -2,8 +2,8 @@
 #include <thread>
 #include <chrono>
 
-namespace modules {
-    time::time(flecs::world& world) {
+namespace waiting {
+    module::module(flecs::world& world) {
         //world.set_threads(4);
 
         world.component<Timer>()

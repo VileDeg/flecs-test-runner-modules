@@ -1,6 +1,7 @@
+#pragma once
 #include <flecs.h>
 
-namespace modules {
+namespace waiting {
   struct Timer {
     int time;
   };
@@ -9,7 +10,7 @@ namespace modules {
     int step;
   };
   
-  struct time {
-    time(flecs::world& world);
+  struct module {
+    module(flecs::world& world);
   };
 }
