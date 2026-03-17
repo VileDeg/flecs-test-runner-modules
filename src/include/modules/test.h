@@ -5,8 +5,7 @@
 #include <type_traits>
 
 namespace movement {
-	// TODO: move types into movement namespace?
-
+	
 	class Vector2D {
 	public:
 		float x, y;
@@ -44,17 +43,6 @@ namespace movement {
 	using Position = Vector2D;
 	using Direction = Vector2D;
 
-	/*
-		Checklist:
-			+ Primitive member
-			- Vector member of primitives
-			+ Vector member of opaque
-			- Array member of primitives
-			+ Array member of opaque
-
-	
-	*/
-	
 	template <typename T>
 	struct Appliable {
 		using Target = T;
@@ -73,7 +61,7 @@ friend bool operator>=(const _Type& lhs, const _Type& rhs) { \
 	return !(lhs < rhs);																			 \
 }																														 \
 friend bool operator<=(const _Type& lhs, const _Type& rhs) { \
-		return !(lhs > rhs);										 \
+	return !(lhs > rhs);																			 \
 }
 
 #define DELEGATED_OPERATORS(_Type, _Member)\
