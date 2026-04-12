@@ -14,10 +14,8 @@ FetchContent_MakeAvailable(flecs)
 set(SRC_FILES
     movement.cpp
     time.cpp
-    test.cpp
     include/modules/movement.h
     include/modules/time.h
-    include/modules/test.h
 )
 
 # Create a static library

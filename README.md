@@ -2,8 +2,6 @@
 
 This is sample testable modules for **Flecs Test Runner (FTR)** applications.
 
-TODO
-
 ## Build (C++)
 
 `CMake` must be installed in order to build.
