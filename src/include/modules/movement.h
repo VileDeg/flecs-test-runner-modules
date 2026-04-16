@@ -10,7 +10,12 @@
 
 #include <flecs.h>
 
+#include "common.h"
+
 namespace movement {
+
+	template <typename T>
+	using Appliable = modules_common::Appliable<T>;
 	
 	class Vector2D {
 	public:
@@ -49,45 +54,12 @@ namespace movement {
 	using Position = Vector2D;
 	using Direction = Vector2D;
 
-	template <typename T>
-	struct Appliable {
-		using Target = T;
-
-		virtual void apply(T& target) const = 0;
-	};
-
-#define DERIVED_OPERATORS(_Type)\
-friend bool operator!=(const _Type& lhs, const _Type& rhs) { \
-	return !(lhs == rhs);																			 \
-}																														 \
-friend bool operator>(const _Type& lhs, const _Type& rhs) {	 \
-	return rhs < lhs;																					 \
-}																														 \
-friend bool operator>=(const _Type& lhs, const _Type& rhs) { \
-	return !(lhs < rhs);																			 \
-}																														 \
-friend bool operator<=(const _Type& lhs, const _Type& rhs) { \
-	return !(lhs > rhs);																			 \
-}
-
-#define DELEGATED_OPERATORS(_Type, _Member)\
-friend bool operator==(const _Type& lhs, const _Type& rhs) { \
-	return lhs._Member == rhs._Member;												 \
-	}																													 \
-friend bool operator<(const _Type& lhs, const _Type& rhs) {	 \
-	return lhs._Member < rhs._Member;													 \
-}																														 \
-DERIVED_OPERATORS(_Type)
-
 	struct Speed : Appliable<Position> {
-		using Base = Appliable<Position>;
-		using Target = Base::Target;
-
 		float value = -323;
 
 		inline static const Vector2D direction = {1, 1};
 
-		void apply(Target& pos) const override {
+		void apply(Position& pos) const override {
 			pos.x += direction.x * value;
 			pos.y += direction.y * value;
 		}
@@ -123,9 +95,6 @@ DERIVED_OPERATORS(_Type)
 	using PositionArray  = Container<PositionArrayT>;
 
 	struct Velocity : Appliable<Position> {
-		using Base = Appliable<Position>;
-		using Base::Target;
-
 		float linearSpeed;
 		Direction direction;
 
@@ -155,31 +124,6 @@ DERIVED_OPERATORS(_Type)
 		Vector2D previousPosition;
 		float previousRotation;
 		float deltaTimeAccumulator;
-	};
-
-	// --- String Component ---
-	struct Label {
-		std::string value;
-	};
-
-	enum class StringOperation {
-		None,
-		Lowercase,
-		Uppercase,
-	};
-
-	struct StringModifier : Appliable<Label> {
-		StringOperation operation;
-
-		void apply(Label& label) const override {
-			auto& data = label.value;
-			bool isUpper = (operation == StringOperation::Uppercase);
-
-			std::transform(data.begin(), data.end(), data.begin(),
-				[isUpper](unsigned char c) {
-					return isUpper ? std::toupper(c) : std::tolower(c);
-				});
-		}
 	};
 
 	struct module {

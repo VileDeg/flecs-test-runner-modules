@@ -121,15 +121,7 @@ namespace movement {
 			.on_compare()
 			.member<PositionVectorTT>("data");
 		
-		// Label
-		world.component<Label>()
-			.member<std::string>("value");
-		world.component<StringOperation>()
-			.constant("None", StringOperation::None)
-			.constant("Lowercase", StringOperation::Lowercase)
-			.constant("Uppercase", StringOperation::Uppercase);
-		world.component<StringModifier>()
-			.member<StringOperation>("operation", 0, offsetof(StringModifier, operation));
+		
 
 		// Nested types
 		world.component<Velocity>()
@@ -162,7 +154,6 @@ namespace movement {
 		registerSystemAppliable<Velocity, Position>(world, "move_Velocity");
 		registerSystemAppliable<Speed, Position>(world, "move_Speed");
 
-		registerSystemAppliable<StringModifier, Label>(world, "modify_Label");
 
 		registerSystemAppliableContainer<Speed, PositionVector>(world, "moveVector_Speed");
 		registerSystemAppliableContainer<Speed, PositionArray>(world, "moveArray_Speed");

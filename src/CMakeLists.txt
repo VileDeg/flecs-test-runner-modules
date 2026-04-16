@@ -13,8 +13,13 @@ FetchContent_MakeAvailable(flecs)
 # Explicit source file list (no GLOB_RECURSE)
 set(SRC_FILES
     movement.cpp
+    structural.cpp
     time.cpp
+    modifiers.cpp
+    include/modules/common.h
     include/modules/movement.h
+    include/modules/structural.h
+    include/modules/modifiers.h
     include/modules/time.h
 )
 
