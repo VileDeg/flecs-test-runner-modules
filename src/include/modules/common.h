@@ -32,14 +32,3 @@ friend bool operator<(const _Type& lhs, const _Type& rhs) {	 \
 	return lhs._Member < rhs._Member;													 \
 }																														 \
 DERIVED_OPERATORS(_Type)
-
-namespace modules_common {
-
-template <typename T>
-struct Appliable {
-	using Target = T;
-
-	virtual void apply(T& target) const = 0;
-};
-
-}

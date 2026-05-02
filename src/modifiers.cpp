@@ -3,6 +3,11 @@
 #include <random>
 #include <limits>
 
+#define MODIFIER_TARGET(_Type) \
+	world.component<_Type>()  \
+		.member<std::decay_t<decltype(std::declval<_Type>().value)>>("value");  \
+	registerSystemAppliable<StringModifier, _Type>(world, "modify_" #_Type);  
+
 
 namespace modifiers {
 
@@ -10,7 +15,7 @@ namespace modifiers {
 	void registerSystemAppliable(flecs::world& world, const std::string& name) {
 		world.system<const Appl, Target>(name.c_str())
 			.each([](const Appl& appliable, Target& target) {
-			appliable.apply(target);
+					appliable.apply(target);
 				});
 	}
 
@@ -27,16 +32,17 @@ namespace modifiers {
 			*data = value; // Assign new value to std::string
 				});
 
-		// Label
-		world.component<Label>()
-			.member<std::string>("value");
 		world.component<StringOperation>()
 			.constant("None", StringOperation::None)
 			.constant("Lowercase", StringOperation::Lowercase)
 			.constant("Uppercase", StringOperation::Uppercase);
 		world.component<StringModifier>()
-			.member<StringOperation>("operation", 0, offsetof(StringModifier, operation));
+			.member<StringOperation>("operation");
 
-		registerSystemAppliable<StringModifier, Label>(world, "modify_Label");
+		// Label
+		// TODO: could make single system accept any type
+		MODIFIER_TARGET(Label);
+		MODIFIER_TARGET(LabelChar);
+		MODIFIER_TARGET(LabelUnsignedChar);
 	}
 }

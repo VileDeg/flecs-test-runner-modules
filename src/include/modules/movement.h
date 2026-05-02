@@ -14,9 +14,6 @@
 
 namespace movement {
 
-	template <typename T>
-	using Appliable = modules_common::Appliable<T>;
-	
 	class Vector2D {
 	public:
 		float x, y;
@@ -54,12 +51,12 @@ namespace movement {
 	using Position = Vector2D;
 	using Direction = Vector2D;
 
-	struct Speed : Appliable<Position> {
+	struct Speed {
 		float value = -323;
 
 		inline static const Vector2D direction = {1, 1};
 
-		void apply(Position& pos) const override {
+		void apply(Position& pos) const {
 			pos.x += direction.x * value;
 			pos.y += direction.y * value;
 		}
@@ -94,11 +91,11 @@ namespace movement {
 
 	using PositionArray  = Container<PositionArrayT>;
 
-	struct Velocity : Appliable<Position> {
+	struct Velocity {
 		float linearSpeed;
 		Direction direction;
 
-		void apply(Position& pos) const override {
+		void apply(Position& pos) const {
 			pos.x += direction.x * linearSpeed;
 			pos.y += direction.y * linearSpeed;
 		}
