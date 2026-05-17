@@ -43,7 +43,7 @@ namespace structural {
 			.with<SpawnedDataReceiver>()
 			.immediate()
 			.each(
-				[&spawners](flecs::entity e) {
+				[spawners](flecs::entity e) {
 					spawners.each(
 						[&](const Spawner& spawner) {
 							std::random_device rd;
@@ -75,7 +75,7 @@ namespace structural {
 		world.system<const Spawned>("DeleteSpawnedEntities")
 			.immediate()
 			.each(
-				[&spawners](flecs::entity e, const Spawned& spawned) {
+				[spawners](flecs::entity e, const Spawned& spawned) {
 					std::cout << "Run system DeleteSpawnedEntities\n";
 
 					spawners.each(
@@ -93,7 +93,7 @@ namespace structural {
 			.immediate()
 			.with<SpawnedDataReceiver>()
 			.each(
-				[&spawners](flecs::entity e, SpawnedData& spawnedData) {
+				[spawners](flecs::entity e, SpawnedData& spawnedData) {
 					
 					spawners.each(
 						[&](Spawner& spawner) {
